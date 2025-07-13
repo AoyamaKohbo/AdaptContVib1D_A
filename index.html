@@ -34,32 +34,26 @@
     \begin{align}
     \ddot x_M + a\dot x_M + b(x_M - u)= 0 \label{eq:MdlEqn}
     \end{align}
-
   <p> ここに、\(x_M\)は規範モデルの変位です。</p>
 
   <h3>§適応制御則</h3>
   <p>ここではどのようなメカニズムで適応制御が実現されるのかを確認します。適応制御則は次式で与えられます。</p>
     \begin{align}
-      \dot{\hat{\eta}} = \alpha \frac{\{a \dot x + b (x - u)\}\varepsilon}{\hat\eta},~~~\varepsilon = e + c\dot e,~~~e = x_M - x,~~~c = \frac{2}{25.12}.\label{eq:AdaptRule0}
-    \end{align}
+      \left.
+      \begin{array}{@{\,}rl}
+      \dot{\hat{\eta}} &=~ -\alpha \frac{v_{FB}}{\hat\eta}\varepsilon,\\
+      v_{FB} &=~ -a\dot x - b(x - u)\\
+      \varepsilon &=~ e + c\dot e,~~~e = x_M - x.
+      \end{array}
+      \right\} \label{eq:AdaptRule0}    
+      \end{align}
   <p><a href="https://aoyamakohbo.github.io/AdaptContVib1D/">モデル規範適応制御の数値解析(数値実験)</a>
-    では、適応制御則\eqref{eq:AdaptRule0}により、\(\eta/\hat{\eta}=1\)に収束することを確認しています。</p>
-
-  <p>適応制御則の動作メカニズムを理解するために、</p>  
-    \begin{align}
-      v_{FB} = -a\dot x - b(x - u) \label{eq:vFB}
-    \end{align}
-
-  <p>とすると、適応制御則は次式となります。</p>
-  \begin{align}
-   \dot{\hat{\eta}} = -\alpha \frac{v_{FB}}{\hat\eta}\varepsilon \label{eq:AdaptRule}
-  \end{align}
- 
-  <h3>§数値実験結果</h3>
+    では、\(c=2/25.12\)、\(\hat\eta=1\)として適応制御則\eqref{eq:AdaptRule0}により、\(\eta/\hat{\eta}=1\)に収束することを確認しています。</p>
  <p>ここでは、
     適応制御対象\eqref{eq:SysEqn2}の\(\eta=0.5 (< \hat{\eta})\)と\(\eta=2.0 (> \hat{\eta})\)の場合について、
-    \(v_{FB}\)と\(\varepsilon\)の動作を観察します。</p>
-
+    適応制御則\eqref{eq:AdaptRule0}を構成する\(v_{FB}\)と\(\varepsilon\)の動作を観察します。</p>
+ 
+ <h3>§数値実験結果</h3>
  <p>まず、下図は\(\eta=0.5\)の場合について\(-v_{FB}\)と\(\varepsilon\)を描画したグラフです。
     振幅は比較できるように調整しています。\(-v_{FB}\)と\(\varepsilon\)の位相がほぼ反転していることを確認できます。</p>
   <img src="v_FB_ε050.jpg" width=500px>
@@ -69,7 +63,7 @@
       \(-v_{FB}\)と\(\varepsilon\)の位相が反転しているので、
       両者を掛け合わせた\(-v_{FB}\varepsilon\)はマイナスになります。
       したがって、\(-v_{FB}\)\(\varepsilon\)のグラフはマイナス側(下側)にシフトしています。
-      すなわち、式\eqref{eq:AdaptRule}で表される\(\hat{\eta}\)の時間増分\(\dot{\hat{\eta}}\)は負(\(\dot{\hat{\eta}} < 0\))となっています。</p>    
+      すなわち、式\eqref{eq:AdaptRule0}で表される\(\hat{\eta}\)の時間増分\(\dot{\hat{\eta}}\)は負(\(\dot{\hat{\eta}} < 0\))となっています。</p>    
   <img src="v_FB×ε050.jpg" width=500px>
     
   <p>次に、下図は\(\eta=2.0\)の場合について\(-v_{FB}\)と\(\varepsilon\)を描画したグラフです。
@@ -81,25 +75,25 @@
       \(-v_{FB}\)と\(\varepsilon\)の位相が揃っているので、
       両者を掛け合わせた\(-v_{FB}\varepsilon\)はプラスになります。
       したがって、\(-v_{FB}\varepsilon\)はプラス側(上側)にシフトしています。
-      すなわち、式\eqref{eq:AdaptRule}で表される\(\hat{\eta}\)の時間増分\(\dot{\hat{\eta}}\)は正(\(\dot{\hat{\eta}} > 0\))となっています。</p>       
+      すなわち、式\eqref{eq:AdaptRule0}で表される\(\hat{\eta}\)の時間増分\(\dot{\hat{\eta}}\)は正(\(\dot{\hat{\eta}} > 0\))となっています。</p>       
   <img src="v_FB×ε200.jpg" width=500px>
 
   <p>下図は\(\eta=0.5(< \hat{\eta})\)と\(\eta=2.0(> \hat{\eta})\)の場合について積\(-v_{FB}\varepsilon\)を描画したグラフです。</p>
   <p>\(\eta=0.5\)(赤線)では\(-v_{FB}\varepsilon < 0\)(負)となり、
-      \(\hat{\eta}\)の時間増分\(\dot{\hat{\eta}} < 0\)(負)となるので\(\hat{\eta}\)は減少し、
-      \(\hat{\eta}=0.5\)に収束します。</p>
+      \(\hat{\eta}\)の時間増分\(\dot{\hat{\eta}} < 0\)(負)となるので\(\hat{\eta}\)は1から減少し、
+      \(\hat{\eta}=0.5\)(\(\eta/\hat\eta=1\))に収束します。</p>
    <p>\(\eta=2.0\)(青線)では\(-v_{FB}\varepsilon >0\)(正)となり、
-      \(\hat{\eta}\)の時間増分\(\dot{\hat{\eta}} > 0\)(正)となるので\(\hat{\eta}\)は増加し、
-      \(\hat{\eta}=2.0\)に収束します。</p>
+      \(\hat{\eta}\)の時間増分\(\dot{\hat{\eta}} > 0\)(正)となるので\(\hat{\eta}\)は1から増加し、
+      \(\hat{\eta}=2.0\)(\(\eta/\hat\eta=1\))に収束します。</p>
   <img src="v_FB_ε200_050.jpg" width=500px>
 
   <p>\(\hat{\eta} > \eta\)の場合は\(\dot{\hat{\eta}}\)は負となり、
-      適応制御則\eqref{eq:AdaptRule}は\(\hat\eta\)を減少させるように動作して\(-v_{FB}\varepsilon\)、
+      適応制御則\eqref{eq:AdaptRule0}は\(\hat\eta\)を減少させるように動作して\(-v_{FB}\varepsilon\)、
       すなわち、\(\dot{\hat{\eta}}\)は\(0\)に収束しています。</p>
   <p>\(\hat \eta < \eta\)の場合は\(\dot{\hat \eta}\)は正となり、
-      適応制御則\eqref{eq:AdaptRule}は\(\hat\eta\)を増加させるように動作して\(-v_{FB}\varepsilon\)、
+      適応制御則\eqref{eq:AdaptRule0}は\(\hat\eta\)を増加させるように動作して\(-v_{FB}\varepsilon\)、
       すなわち、\(\dot{\hat{\eta}}\)は\(0\)に収束しています。</p>
-  <p>以上のことから、適応制御則\eqref{eq:AdaptRule}は\(\hat\eta\)に対してネガティブフィードバックとして動作し、
+  <p>以上のことから、適応制御則\eqref{eq:AdaptRule0}は\(\hat\eta\)に対してネガティブフィードバックとして動作し、
     \(\eta/\hat{\eta}=1\)に収束します。</p>
 
   <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
