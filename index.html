@@ -26,7 +26,7 @@
 
     <p>適応制御対象：</p>
     \begin{align}
-    \ddot x + a\frac{\eta}{\hat\eta}\dot x + b\frac{\eta}{\hat\eta}(x - u) = 0 \label{eq:SysEqn2}
+    \ddot x + a \frac{\eta}{\hat\eta}\dot x + b\frac{\eta}{\hat\eta}(x - u) = 0 \label{eq:SysEqn2}
     \end{align}
     <p> ここに、\(x\)は制御対象の変位です。係数\(a=25.12\)、\(b=3943\)、\(\hat{\eta}=1\)(初期値)です。</p>
 
@@ -41,7 +41,7 @@
     \begin{align}
       \left.
       \begin{array}{@{\,}rl}
-      \dot{\hat{\eta}} &=~ -\alpha \frac{v_{FB}}{\hat\eta}\varepsilon,\\
+      \dot{\hat{\eta}} &=~ -\alpha \displaystyle\frac{v_{FB}}{\hat\eta}\varepsilon,\\
       v_{FB} &=~ -a\dot x - b(x - u),\\
       \varepsilon &=~ e + c\dot e,\\
       e &=~ x_M - x.
